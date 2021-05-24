@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Rainer : MonoBehaviour {
-    // Start is called before the first frame update
+    [Header("Map Constraints")]
     [SerializeField] private int minX = 0;
     [SerializeField] private int minZ = 0;
     [SerializeField] private int maxX = 5;
     [SerializeField] private int maxZ = 5;
-
+    
+    [Header("Spawnable objects")]
     [SerializeField] private GameObject[] treasurePrefabs;
     [SerializeField] private GameObject[] hazardPrefabs;
+
+    [Header("Spawning parameters")]
+    [SerializeField] private float minSpawnCooldownInSeconds = 1f;
+    [SerializeField] private float maxSpawnCooldownInSeconds = 3f;
+    
+    private float timeUntilNextSpawn = 2.5f;
+    
     void Start() {
         int xSize = maxX - minX + 1;
         int zSize = maxZ - minZ + 1;
-        bool[,] blocks = new bool[xSize, zSize];
+        bool[,] blocks = new bool[xSize, zSize]; // todo use list to ease random position assignment
         Debug.Log("[" +blocks.GetLength(0) + "," + blocks.GetLength(1) + "]");
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
@@ -30,6 +38,18 @@ public class Rainer : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update() { }
+    void Update() {
+        timeUntilNextSpawn -= Time.deltaTime;
+        if (timeUntilNextSpawn <= 0) {
+            Spawn();
+            timeUntilNextSpawn = 1f; // todo provide new random spawn time
+        }
+    }
+
+    private void Spawn() {
+        if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
+            return;
+        }
+        Instantiate(treasurePrefabs[0], new Vector3(0, 5, 0), Random.rotation); // todo assign random position on grid
+    }
 }
