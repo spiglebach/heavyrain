@@ -49,11 +49,12 @@ public class Rainer : MonoBehaviour {
     }
 
     private void Spawn() {
+        // todo randomize hazard and treasure spawning
         if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
             return;
         }
         Instantiate(
-            treasurePrefabs[0], // todo assign random prefab
+            treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
             spawnPositions.ElementAt(Random.Range(0, spawnPositions.Count)),
             Random.rotation);
     }
