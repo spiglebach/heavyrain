@@ -3,86 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    private const float MOVEMENT_DEADZONE = 0.4f;
-    private bool moved = false;
-    private bool aPressed = false;
-    private bool dPressed = false;
-    private bool wPressed = false;
-    private bool sPressed = false;
-    void Start() {
-        
-    }
+    private bool moved = false; // todo use to determine if a step was taken
+    private DirectionalMovement[] directionalMovements = new[] {
+        new DirectionalMovement("RIGHT", new Vector3(1, 0, 0), KeyCode.D),
+        new DirectionalMovement("DOWN", new Vector3(0, 0, -1), KeyCode.S),
+        new DirectionalMovement("LEFT", new Vector3(-1, 0, 0), KeyCode.A),
+        new DirectionalMovement("UP", new Vector3(0, 0, 1), KeyCode.W)
+    };
 
     void Update() {
-        MoveLeft();
-        MoveRight();
-        MoveUp();
-        MoveDown();
-    }
+        for (var i = 0; i < directionalMovements.Length; i++) {
+            var movement = directionalMovements[i];
+            if (movement.IsPressed()) {
+                foreach (var keyCode in movement.KeyCodes) {
+                    if (Input.GetKeyUp(keyCode)) {
+                        movement.SetPressed(false);
+                    }
+                }
+                continue;
+            }
 
-    void MoveLeft() {
-        if (aPressed) {
-            if (Input.GetKeyUp(KeyCode.A)) {
-                aPressed = false;
+            bool isPressed = false;
+            foreach (var keyCode in movement.KeyCodes) {
+                isPressed = isPressed || Input.GetKeyDown(keyCode);
             }
-            return;
-        }
-        aPressed = Input.GetKeyDown(KeyCode.A);
 
-        if (aPressed) {
-            var direction = Vector3.left;
-            if (CheckDirection(direction)) {
-                transform.Translate(direction);
-            }
-        }
-    }
-    void MoveRight() {
-        if (dPressed) {
-            if (Input.GetKeyUp(KeyCode.D)) {
-                dPressed = false;
-            }
-            return;
-        }
-        dPressed = Input.GetKeyDown(KeyCode.D);
+            movement.SetPressed(isPressed);
 
-        if (dPressed) {
-            var direction = Vector3.right;
-            if (CheckDirection(direction)) {
-                transform.Translate(direction);
-            }
-        }
-    }
-    
-    void MoveUp() {
-        if (wPressed) {
-            if (Input.GetKeyUp(KeyCode.W)) {
-                wPressed = false;
-            }
-            return;
-        }
-        wPressed = Input.GetKeyDown(KeyCode.W);
-
-        if (wPressed) {
-            var direction = new Vector3(0, 0, 1);
-            if (CheckDirection(direction)) {
-                transform.Translate(direction);
-            }
-        }
-    }
-    
-    void MoveDown() {
-        if (sPressed) {
-            if (Input.GetKeyUp(KeyCode.S)) {
-                sPressed = false;
-            }
-            return;
-        }
-        sPressed = Input.GetKeyDown(KeyCode.S);
-
-        if (sPressed) {
-            var direction = new Vector3(0, 0, -1);
-            if (CheckDirection(direction)) {
-                transform.Translate(direction);
+            if (movement.IsPressed()) {
+                if (CheckDirection(movement.Direction)) {
+                    transform.Translate(movement.Direction);
+                    return;
+                }
             }
         }
     }
@@ -92,4 +44,27 @@ public class Player : MonoBehaviour {
         Vector3 down = Vector3.down;
         return Physics.Raycast(rayStart, down, 2, LayerMask.GetMask("Platforms"));
     }
+}
+
+class DirectionalMovement {
+    private bool isPressed;
+    private Vector3 direction;
+    private KeyCode[] keyCodes;
+
+    public DirectionalMovement(string label, Vector3 direction, params KeyCode[] keyCodes) {
+        this.direction = direction;
+        this.keyCodes = keyCodes;
+    }
+
+    public bool IsPressed() {
+        return isPressed;
+    }
+
+    public void SetPressed(bool pressed) {
+        isPressed = pressed;
+    }
+
+    public Vector3 Direction => direction;
+
+    public KeyCode[] KeyCodes => keyCodes;
 }
