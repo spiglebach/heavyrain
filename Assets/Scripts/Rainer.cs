@@ -21,10 +21,10 @@ public class Rainer : MonoBehaviour {
     
     private float timeUntilNextSpawn = 2.5f;
     private HashSet<Vector3> spawnPositions;
+
+    private List<FallingObject> fallingObjects = new List<FallingObject>();
     
     void Start() {
-        int xSize = maxX - minX + 1;
-        int zSize = maxZ - minZ + 1;
         spawnPositions = new HashSet<Vector3>();
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
@@ -53,9 +53,23 @@ public class Rainer : MonoBehaviour {
         if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
             return;
         }
-        Instantiate(
+        var spawnedObject = Instantiate(
             treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
             spawnPositions.ElementAt(Random.Range(0, spawnPositions.Count)),
             Random.rotation);
+        var fallingObject = spawnedObject.GetComponent<FallingObject>();
+        if (fallingObject) {
+            fallingObjects.Add(fallingObject);
+        }
+    }
+
+    public void Fall() {
+        foreach (var fallingObject in fallingObjects) {
+            fallingObject.Fall();
+        }
+    }
+
+    public void Remove(FallingObject instance) {
+        fallingObjects.Remove(instance);
     }
 }
