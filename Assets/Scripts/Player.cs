@@ -60,6 +60,9 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+        /*if (Input.GetKey(KeyCode.Space)) {
+            rainer.Fall(); // todo pause until keyUp
+        }*/
     }
 
     void TakeStep(Vector3 direction) {
@@ -73,6 +76,16 @@ public class Player : MonoBehaviour {
         var rayStart = transform.position + direction;
         Vector3 down = Vector3.down;
         return Physics.Raycast(rayStart, down, 2, LayerMask.GetMask("Platforms"));
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        var fallingObject = other.gameObject.GetComponent<FallingObject>();
+        if (!fallingObject) {
+            return;
+        }
+        // todo catch or trigger hazard
+        rainer.Remove(fallingObject);
+        Destroy(other.gameObject);
     }
 }
 

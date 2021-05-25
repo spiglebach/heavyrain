@@ -15,11 +15,11 @@ public class Rainer : MonoBehaviour {
     [SerializeField] private GameObject[] hazardPrefabs;
 
     [Header("Spawning parameters")]
-    [SerializeField] private float minSpawnCooldownInSeconds = 1f;
-    [SerializeField] private float maxSpawnCooldownInSeconds = 3f;
+    [SerializeField] private int minSpawnCooldownInSteps = 2;
+    [SerializeField] private int maxSpawnCooldownInSteps = 4;
     [SerializeField] private float spawnHeight = 5f;
     
-    private float timeUntilNextSpawn = 2.5f;
+    private int stepsUntilNextSpawn = 2;
     private HashSet<Vector3> spawnPositions;
 
     private List<FallingObject> fallingObjects = new List<FallingObject>();
@@ -37,14 +37,6 @@ public class Rainer : MonoBehaviour {
                     hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
                 }
             }
-        }
-    }
-
-    void Update() {
-        timeUntilNextSpawn -= Time.deltaTime;
-        if (timeUntilNextSpawn <= 0) {
-            Spawn();
-            timeUntilNextSpawn = 1f; // todo provide new random spawn time
         }
     }
 
@@ -66,6 +58,11 @@ public class Rainer : MonoBehaviour {
     public void Fall() {
         foreach (var fallingObject in fallingObjects) {
             fallingObject.Fall();
+        }
+        stepsUntilNextSpawn--;
+        if (stepsUntilNextSpawn <= 0) {
+            Spawn();
+            stepsUntilNextSpawn = Random.Range(minSpawnCooldownInSteps, maxSpawnCooldownInSteps + 1);
         }
     }
 
