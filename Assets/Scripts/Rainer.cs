@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Rainer : MonoBehaviour {
     [Header("Map Constraints")]
@@ -20,12 +22,13 @@ public class Rainer : MonoBehaviour {
     [SerializeField] private float spawnHeight = 5f;
     
     private int stepsUntilNextSpawn = 2;
-    private HashSet<Vector3> spawnPositions;
+    private HashSet<PlatformBlock> spawnPositions;
 
     private List<FallingObject> fallingObjects = new List<FallingObject>();
     
     void Start() {
-        spawnPositions = new HashSet<Vector3>();
+        spawnPositions = new HashSet<PlatformBlock>(FindObjectsOfType<PlatformBlock>());
+        /*spawnPositions = new HashSet<PlatformBlock>();
         for (int x = minX; x <= maxX; x++) {
             for (int z = minZ; z <= maxZ; z++) {
                 Vector3 rayStart = new Vector3(x, 1, z);
@@ -37,7 +40,7 @@ public class Rainer : MonoBehaviour {
                     hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
                 }
             }
-        }
+        }*/
     }
 
     private void Spawn() {
@@ -45,9 +48,13 @@ public class Rainer : MonoBehaviour {
         if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
             return;
         }
+
+        var platformBlock = spawnPositions.ElementAt(Random.Range(0, spawnPositions.Count));
+        int height = 4;
+        platformBlock.ObjectFallingFromHeight(height);
         var spawnedObject = Instantiate(
             treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
-            spawnPositions.ElementAt(Random.Range(0, spawnPositions.Count)),
+            platformBlock.transform.position + new Vector3(0, height, 0),
             Random.rotation);
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
         if (fallingObject) {

@@ -1867,8 +1867,8 @@ MonoBehaviour:
   - {fileID: 426337422581755278, guid: b97b22c9985be5d47acc4c2c90fa7470, type: 3}
   hazardPrefabs:
   - {fileID: 5641531144559595172, guid: d5251b19a446d374ea9db361a5fd3abb, type: 3}
-  minSpawnCooldownInSeconds: 1
-  maxSpawnCooldownInSeconds: 3
+  minSpawnCooldownInSteps: 2
+  maxSpawnCooldownInSteps: 4
   spawnHeight: 4
 --- !u!4 &1107313745
 Transform:
