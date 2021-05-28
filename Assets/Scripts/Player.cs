@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     // Cached object references
@@ -26,9 +27,14 @@ public class Player : MonoBehaviour {
     [SerializeField] private float freezeDurationInSeconds = 1f;
     private float currentStepProgression = 0;
     
+    // Score
+    private int score;
+    [SerializeField] private Text scoreDisplay;
+
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        DisplayScore();
     }
 
     void Update() {
@@ -138,6 +144,15 @@ public class Player : MonoBehaviour {
         fallingObject.RemoveFromPlatform();
         fallingObject.ApplyEffect(this);
         Destroy(other.gameObject);
+    }
+
+    public void AddToScore(int amount) {
+        score += amount;
+        DisplayScore();
+    }
+
+    private void DisplayScore() {
+        scoreDisplay.text = score.ToString();
     }
 }
 

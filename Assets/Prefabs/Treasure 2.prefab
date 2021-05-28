@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 426337422581755276}
   - component: {fileID: 426337422581755279}
   - component: {fileID: 8502633694135423988}
-  - component: {fileID: 7052261541487237681}
+  - component: {fileID: -7877851341477675063}
   m_Layer: 0
   m_Name: Treasure 2
   m_TagString: Untagged
@@ -114,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7052261541487237681
+--- !u!114 &-7877851341477675063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 426337422581755278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e660cecce964945be03cb86980b9ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 738374e634f08504e972a3da4be3fbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreAward: 50
