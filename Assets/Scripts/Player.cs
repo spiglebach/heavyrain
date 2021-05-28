@@ -6,25 +6,29 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     // Cached object references
     private Rainer rainer;
+    private MeshRenderer _meshRenderer;
 
     // Turn based movement variables
     private bool moved;
     private bool waited;
+    private bool frozen;
     private Vector3 movementOrigin;
     private Vector3 movementTarget;
     private DirectionalMovement[] directionalMovements = {
-        new DirectionalMovement("RIGHT", new Vector3(1, 0, 0), KeyCode.D),
-        new DirectionalMovement("DOWN", new Vector3(0, 0, -1), KeyCode.S),
-        new DirectionalMovement("LEFT", new Vector3(-1, 0, 0), KeyCode.A),
-        new DirectionalMovement("UP", new Vector3(0, 0, 1), KeyCode.W)
+        new DirectionalMovement(Direction.LEFT, new Vector3(1, 0, 0), KeyCode.D),
+        new DirectionalMovement(Direction.DOWN, new Vector3(0, 0, -1), KeyCode.S),
+        new DirectionalMovement(Direction.RIGHT, new Vector3(-1, 0, 0), KeyCode.A),
+        new DirectionalMovement(Direction.UP, new Vector3(0, 0, 1), KeyCode.W)
     };
     
     // Smoothed movement transition variables
     [SerializeField] private float progressionDurationInSeconds = .05f;
+    [SerializeField] private float freezeDurationInSeconds = 1f;
     private float currentStepProgression = 0;
     
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Update() {
@@ -35,7 +39,19 @@ public class Player : MonoBehaviour {
             if (currentStepProgression >= progressionDurationInSeconds) {
                 transform.position = movementTarget;
                 moved = false;
+                ClearMovement();
+                currentStepProgression = 0;
                 rainer.Fall();
+            }
+            return;
+        }
+        if (frozen) {
+            currentStepProgression += Time.deltaTime;
+            if (currentStepProgression >= freezeDurationInSeconds) {
+                frozen = false;
+                rainer.Fall();
+                currentStepProgression = 0;
+                _meshRenderer.material.color = Color.white;
             }
             return;
         }
@@ -43,6 +59,7 @@ public class Player : MonoBehaviour {
             currentStepProgression += Time.deltaTime;
             if (currentStepProgression >= progressionDurationInSeconds) {
                 waited = false;
+                currentStepProgression = 0;
                 rainer.Fall();
             }
             return;
@@ -77,6 +94,18 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void ClearMovement() {
+        foreach (var direction in directionalMovements) {
+            direction.SetPressed(false);
+        }
+    }
+
+    public void Freeze() {
+        frozen = true;
+        _meshRenderer.material.color = Color.blue;
+        currentStepProgression = 0;
+    }
+
     private void Wait() {
         waited = true;
         currentStepProgression = 0;
@@ -107,6 +136,7 @@ public class Player : MonoBehaviour {
         // todo catch or trigger hazard
         rainer.ObjectPickedUp(fallingObject);
         fallingObject.RemoveFromPlatform();
+        fallingObject.ApplyEffect(this);
         Destroy(other.gameObject);
     }
 }
@@ -116,7 +146,7 @@ class DirectionalMovement {
     private Vector3 direction;
     private KeyCode[] keyCodes;
 
-    public DirectionalMovement(string label, Vector3 direction, params KeyCode[] keyCodes) {
+    public DirectionalMovement(Direction label, Vector3 direction, params KeyCode[] keyCodes) {
         this.direction = direction;
         this.keyCodes = keyCodes;
     }
@@ -132,4 +162,11 @@ class DirectionalMovement {
     public Vector3 Direction => direction;
 
     public KeyCode[] KeyCodes => keyCodes;
+}
+
+enum Direction {
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN
 }

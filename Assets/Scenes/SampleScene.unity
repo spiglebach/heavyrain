@@ -1717,7 +1717,7 @@ GameObject:
   - component: {fileID: 1064674679}
   - component: {fileID: 1064674684}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1829,6 +1829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressionDurationInSeconds: 0.05
+  freezeDurationInSeconds: 1
 --- !u!1 &1107313743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,10 +1859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd69128dae8e3d0478f82daa3caa27fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -2
-  minZ: -4
-  maxX: 5
-  maxZ: 3
   treasurePrefabs:
   - {fileID: 2318892420761876412, guid: 52adabf5eee78a945bcb00eec490014e, type: 3}
   - {fileID: 426337422581755278, guid: b97b22c9985be5d47acc4c2c90fa7470, type: 3}
@@ -1869,7 +1866,8 @@ MonoBehaviour:
   - {fileID: 5641531144559595172, guid: d5251b19a446d374ea9db361a5fd3abb, type: 3}
   minSpawnCooldownInSteps: 2
   maxSpawnCooldownInSteps: 4
-  spawnHeight: 4
+  minSpawnHeight: 4
+  maxSpawnHeight: 6
 --- !u!4 &1107313745
 Transform:
   m_ObjectHideFlags: 0

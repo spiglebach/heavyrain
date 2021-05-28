@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FallingObject : MonoBehaviour {
     private PlatformBlock _platformBlock;
+
+    public virtual void ApplyEffect(Player player) {
+        
+    }
     public void Fall() {
         transform.Translate(Vector3.down, Space.World);
     }
