@@ -4,21 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    [SerializeField] private float progressionDurationInSeconds = .5f;
-    private float currentStepProgression = 0;
-    
-    private bool moved = false; // todo use to determine if a step was taken
+    // Cached object references
+    private Rainer rainer;
+
+    // Turn based movement variables
+    private bool moved;
+    private bool waited;
     private Vector3 movementOrigin;
     private Vector3 movementTarget;
-    private DirectionalMovement[] directionalMovements = new[] {
+    private DirectionalMovement[] directionalMovements = {
         new DirectionalMovement("RIGHT", new Vector3(1, 0, 0), KeyCode.D),
         new DirectionalMovement("DOWN", new Vector3(0, 0, -1), KeyCode.S),
         new DirectionalMovement("LEFT", new Vector3(-1, 0, 0), KeyCode.A),
         new DirectionalMovement("UP", new Vector3(0, 0, 1), KeyCode.W)
     };
-
-    private Rainer rainer;
-
+    
+    // Smoothed movement transition variables
+    [SerializeField] private float progressionDurationInSeconds = .05f;
+    private float currentStepProgression = 0;
+    
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
     }
@@ -31,6 +35,14 @@ public class Player : MonoBehaviour {
             if (currentStepProgression >= progressionDurationInSeconds) {
                 transform.position = movementTarget;
                 moved = false;
+                rainer.Fall();
+            }
+            return;
+        }
+        if (waited) {
+            currentStepProgression += Time.deltaTime;
+            if (currentStepProgression >= progressionDurationInSeconds) {
+                waited = false;
                 rainer.Fall();
             }
             return;
@@ -54,15 +66,20 @@ public class Player : MonoBehaviour {
             movement.SetPressed(isPressed);
 
             if (movement.IsPressed()) {
-                if (CheckDirection(movement.Direction)) {
+                if (IsPlatformPresentInDirection(movement.Direction)) {
                     TakeStep(movement.Direction);
                     return;
                 }
             }
         }
-        /*if (Input.GetKey(KeyCode.Space)) {
-            rainer.Fall(); // todo pause until keyUp
-        }*/
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Wait();
+        }
+    }
+
+    private void Wait() {
+        waited = true;
+        currentStepProgression = 0;
     }
 
     void TakeStep(Vector3 direction) {
@@ -72,10 +89,14 @@ public class Player : MonoBehaviour {
         movementTarget = movementOrigin + direction;
     }
 
-    bool CheckDirection(Vector3 direction) {
+    private bool IsPlatformPresentInDirection(Vector3 direction) {
         var rayStart = transform.position + direction;
         Vector3 down = Vector3.down;
-        return Physics.Raycast(rayStart, down, 2, LayerMask.GetMask("Platforms"));
+        return Physics.Raycast(
+            rayStart, 
+            down,
+            2,
+            LayerMask.GetMask("Platforms"));
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -84,7 +105,8 @@ public class Player : MonoBehaviour {
             return;
         }
         // todo catch or trigger hazard
-        //rainer.Remove(fallingObject);
+        rainer.ObjectPickedUp(fallingObject);
+        fallingObject.RemoveFromPlatform();
         Destroy(other.gameObject);
     }
 }

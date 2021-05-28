@@ -7,34 +7,41 @@ public class PlatformBlock : MonoBehaviour {
     private FallingObject currentFallingObject;
     private SpriteRenderer _spriteRenderer;
     private int spriteIndex;
-    
+
     void Start() {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _spriteRenderer.sprite = null;
+        DisableRemainingStepDisplay();
     }
 
-    public void Fall() {
+    public bool FallAndStopIfNecessary() {
         if (currentFallingObject) {
             currentFallingObject.Fall();
         }
         spriteIndex--;
         if (spriteIndex < 0) {
-            _spriteRenderer.sprite = null;
-            currentFallingObject = null;
-            return;
+            DisableRemainingStepDisplay();
+            return true;
         }
         _spriteRenderer.sprite = fallRemainderDisplaySprites[spriteIndex];
+        return false;
     }
 
     public void SetFallingObject(FallingObject fallingObject) {
-        this.currentFallingObject = fallingObject;
-        this.spriteIndex = Mathf.RoundToInt(fallingObject.transform.position.y) - 2;
+        currentFallingObject = fallingObject;
+        fallingObject.SetPlatform(this);
+        spriteIndex = Mathf.RoundToInt(fallingObject.transform.position.y) - 2;
         if (spriteIndex >= 0 && spriteIndex < fallRemainderDisplaySprites.Length) {
             _spriteRenderer.sprite = fallRemainderDisplaySprites[spriteIndex];
         }
     }
-    public bool IsObjectFallingAbove() {
-        return currentFallingObject;
+
+    public void RemoveFallingObject() {
+        currentFallingObject = null;
+        DisableRemainingStepDisplay();
+    }
+
+    private void DisableRemainingStepDisplay() {
+        _spriteRenderer.sprite = null;
     }
 
 }

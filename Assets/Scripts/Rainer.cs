@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,10 +19,12 @@ public class Rainer : MonoBehaviour {
     
     private int stepsUntilNextSpawn = 2;
     private HashSet<PlatformBlock> platformBlocks;
+    private HashSet<PlatformBlock> possibleSpawningBlocks;
     private List<PlatformBlock> platformsWithFallingObject = new List<PlatformBlock>();
     
     void Start() {
         platformBlocks = new HashSet<PlatformBlock>(FindObjectsOfType<PlatformBlock>());
+        possibleSpawningBlocks = new HashSet<PlatformBlock>(platformBlocks);
     }
 
     private void Spawn() {
@@ -30,7 +33,11 @@ public class Rainer : MonoBehaviour {
             return;
         }
 
-        var platformBlock = platformBlocks.ElementAt(Random.Range(0, platformBlocks.Count));
+        if (possibleSpawningBlocks.Count <= 0) {
+            return;
+        }
+        var platformBlock = possibleSpawningBlocks.ElementAt(Random.Range(0, possibleSpawningBlocks.Count));
+        possibleSpawningBlocks.Remove(platformBlock);
         int spawnHeight = Random.Range(minSpawnHeight, maxSpawnHeight + 1);
         var spawnedObject = Instantiate(
             treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
@@ -46,8 +53,7 @@ public class Rainer : MonoBehaviour {
     public void Fall() {
         var finished = new List<PlatformBlock>();
         foreach (var platformBlock in platformsWithFallingObject) {
-            platformBlock.Fall();
-            if (!platformBlock.IsObjectFallingAbove()) {
+            if (platformBlock.FallAndStopIfNecessary()) {
                 finished.Add(platformBlock);
             }
         }
@@ -57,5 +63,9 @@ public class Rainer : MonoBehaviour {
             Spawn();
             stepsUntilNextSpawn = Random.Range(minSpawnCooldownInSteps, maxSpawnCooldownInSteps + 1);
         }
+    }
+
+    public void ObjectPickedUp(FallingObject fallingObject) {
+        possibleSpawningBlocks.Add(fallingObject.GetPlatform());
     }
 }
