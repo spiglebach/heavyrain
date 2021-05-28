@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
             return;
         }
         // todo catch or trigger hazard
-        rainer.Remove(fallingObject);
+        //rainer.Remove(fallingObject);
         Destroy(other.gameObject);
     }
 }

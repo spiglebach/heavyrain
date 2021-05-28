@@ -14,7 +14,7 @@ public class Shredder : MonoBehaviour {
         var otherGameObject = other.gameObject;
         var fallingObject = otherGameObject.GetComponent<FallingObject>();
         if (!fallingObject) return;
-        rainer.Remove(fallingObject);
-        Destroy(otherGameObject);
+        //rainer.Remove(fallingObject);
+        //Destroy(otherGameObject);
     }
 }

@@ -6,12 +6,6 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Rainer : MonoBehaviour {
-    [Header("Map Constraints")]
-    [SerializeField] private int minX = 0;
-    [SerializeField] private int minZ = 0;
-    [SerializeField] private int maxX = 5;
-    [SerializeField] private int maxZ = 5;
-    
     [Header("Spawnable objects")]
     [SerializeField] private GameObject[] treasurePrefabs;
     [SerializeField] private GameObject[] hazardPrefabs;
@@ -19,28 +13,15 @@ public class Rainer : MonoBehaviour {
     [Header("Spawning parameters")]
     [SerializeField] private int minSpawnCooldownInSteps = 2;
     [SerializeField] private int maxSpawnCooldownInSteps = 4;
-    [SerializeField] private float spawnHeight = 5f;
+    [SerializeField] private int minSpawnHeight = 4;
+    [SerializeField] private int maxSpawnHeight = 6;
     
     private int stepsUntilNextSpawn = 2;
-    private HashSet<PlatformBlock> spawnPositions;
-
-    private List<FallingObject> fallingObjects = new List<FallingObject>();
+    private HashSet<PlatformBlock> platformBlocks;
+    private List<PlatformBlock> platformsWithFallingObject = new List<PlatformBlock>();
     
     void Start() {
-        spawnPositions = new HashSet<PlatformBlock>(FindObjectsOfType<PlatformBlock>());
-        /*spawnPositions = new HashSet<PlatformBlock>();
-        for (int x = minX; x <= maxX; x++) {
-            for (int z = minZ; z <= maxZ; z++) {
-                Vector3 rayStart = new Vector3(x, 1, z);
-                Vector3 down = Vector3.down;
-                RaycastHit hit;
-                if (Physics.Raycast(rayStart, down, out hit, 2, LayerMask.GetMask("Platforms"))) {
-                    spawnPositions.Add(new Vector3(x, spawnHeight, z));
-                    Debug.Log("something found at: " + rayStart);
-                    hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-                }
-            }
-        }*/
+        platformBlocks = new HashSet<PlatformBlock>(FindObjectsOfType<PlatformBlock>());
     }
 
     private void Spawn() {
@@ -49,31 +30,32 @@ public class Rainer : MonoBehaviour {
             return;
         }
 
-        var platformBlock = spawnPositions.ElementAt(Random.Range(0, spawnPositions.Count));
-        int height = 4;
-        platformBlock.ObjectFallingFromHeight(height);
+        var platformBlock = platformBlocks.ElementAt(Random.Range(0, platformBlocks.Count));
+        int spawnHeight = Random.Range(minSpawnHeight, maxSpawnHeight + 1);
         var spawnedObject = Instantiate(
             treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
-            platformBlock.transform.position + new Vector3(0, height, 0),
+            platformBlock.transform.position + new Vector3(0, spawnHeight, 0),
             Random.rotation);
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
         if (fallingObject) {
-            fallingObjects.Add(fallingObject);
+            platformBlock.SetFallingObject(fallingObject);
+            platformsWithFallingObject.Add(platformBlock);
         }
     }
 
     public void Fall() {
-        foreach (var fallingObject in fallingObjects) {
-            fallingObject.Fall();
+        var finished = new List<PlatformBlock>();
+        foreach (var platformBlock in platformsWithFallingObject) {
+            platformBlock.Fall();
+            if (!platformBlock.IsObjectFallingAbove()) {
+                finished.Add(platformBlock);
+            }
         }
+        platformsWithFallingObject.RemoveAll(block => finished.Contains(block));
         stepsUntilNextSpawn--;
         if (stepsUntilNextSpawn <= 0) {
             Spawn();
             stepsUntilNextSpawn = Random.Range(minSpawnCooldownInSteps, maxSpawnCooldownInSteps + 1);
         }
-    }
-
-    public void Remove(FallingObject instance) {
-        fallingObjects.Remove(instance);
     }
 }
