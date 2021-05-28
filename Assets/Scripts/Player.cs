@@ -30,6 +30,11 @@ public class Player : MonoBehaviour {
     // Score
     private int score;
     [SerializeField] private Text scoreDisplay;
+    
+    // Health
+    private int health;
+    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private Text healthDisplay;
 
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
@@ -139,7 +144,6 @@ public class Player : MonoBehaviour {
         if (!fallingObject) {
             return;
         }
-        // todo catch or trigger hazard
         rainer.ObjectPickedUp(fallingObject);
         fallingObject.RemoveFromPlatform();
         fallingObject.ApplyEffect(this);
@@ -153,6 +157,31 @@ public class Player : MonoBehaviour {
 
     private void DisplayScore() {
         scoreDisplay.text = score.ToString();
+    }
+
+    public void AddHealth() {
+        health++;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+        DisplayHealth();
+    }
+
+    private void DisplayHealth() {
+        // todo implement
+    }
+
+    public void RemoveHealth() {
+        health--;
+        if (health <= 0) {
+            Die();
+            return;
+        }
+        DisplayHealth();
+    }
+
+    private void Die() {
+        // todo implement
     }
 }
 
