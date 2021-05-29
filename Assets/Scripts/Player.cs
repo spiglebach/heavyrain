@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     // Cached object references
     private Rainer rainer;
     private MeshRenderer _meshRenderer;
+    private SphereCollider _collider;
 
     // Turn based movement variables
     private bool moved;
@@ -23,7 +24,6 @@ public class Player : MonoBehaviour {
     };
     
     // Smoothed movement transition variables
-    [SerializeField] private float progressionDurationInSeconds = .05f;
     [SerializeField] private float freezeDurationInSeconds = 1f;
     private float currentStepProgression = 0;
     
@@ -39,20 +39,21 @@ public class Player : MonoBehaviour {
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _collider = GetComponent<SphereCollider>();
         DisplayScore();
     }
 
     void Update() {
         if (moved) {
             currentStepProgression += Time.deltaTime;
-            var percent = currentStepProgression / progressionDurationInSeconds;
+            var percent = currentStepProgression / Rainer.transitionTimeInSeconds;
             transform.position = Vector3.Lerp(movementOrigin, movementTarget, percent);
-            if (currentStepProgression >= progressionDurationInSeconds) {
+            if (currentStepProgression >= Rainer.transitionTimeInSeconds) {
                 transform.position = movementTarget;
                 moved = false;
                 ClearMovement();
                 currentStepProgression = 0;
-                rainer.Fall();
+                EnableCollider();
             }
             return;
         }
@@ -60,7 +61,6 @@ public class Player : MonoBehaviour {
             currentStepProgression += Time.deltaTime;
             if (currentStepProgression >= freezeDurationInSeconds) {
                 frozen = false;
-                rainer.Fall();
                 currentStepProgression = 0;
                 _meshRenderer.material.color = Color.white;
             }
@@ -68,10 +68,9 @@ public class Player : MonoBehaviour {
         }
         if (waited) {
             currentStepProgression += Time.deltaTime;
-            if (currentStepProgression >= progressionDurationInSeconds) {
+            if (currentStepProgression >= Rainer.transitionTimeInSeconds) {
                 waited = false;
                 currentStepProgression = 0;
-                rainer.Fall();
             }
             return;
         }
@@ -96,6 +95,8 @@ public class Player : MonoBehaviour {
             if (movement.IsPressed()) {
                 if (IsPlatformPresentInDirection(movement.Direction)) {
                     TakeStep(movement.Direction);
+                    DisableCollider();
+                    rainer.Fall();
                     return;
                 }
             }
@@ -103,6 +104,14 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             Wait();
         }
+    }
+
+    private void EnableCollider() {
+        _collider.enabled = true;
+    }
+    
+    private void DisableCollider() {
+        _collider.enabled = false;
     }
 
     private void ClearMovement() {
@@ -115,9 +124,11 @@ public class Player : MonoBehaviour {
         frozen = true;
         _meshRenderer.material.color = Color.blue;
         currentStepProgression = 0;
+        rainer.Fall();
     }
 
     private void Wait() {
+        rainer.Fall();
         waited = true;
         currentStepProgression = 0;
     }

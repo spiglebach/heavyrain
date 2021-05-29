@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Rainer : MonoBehaviour {
+    public const float transitionTimeInSeconds = 0.05f;
+    
     [Header("Spawnable objects")]
     [SerializeField] private GameObject[] treasurePrefabs;
     [SerializeField] private GameObject[] hazardPrefabs;
@@ -28,11 +29,9 @@ public class Rainer : MonoBehaviour {
     }
 
     private void Spawn() {
-        // todo randomize hazard and treasure spawning
         if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
             return;
         }
-
         if (possibleSpawningBlocks.Count <= 0) {
             return;
         }
@@ -41,7 +40,7 @@ public class Rainer : MonoBehaviour {
         int spawnHeight = Random.Range(minSpawnHeight, maxSpawnHeight + 1);
         float chance = Random.Range(0f, 1f);
         GameObject spawnedObject;
-        if (chance > .5f) {
+        if (chance > .5f) { // todo randomize & tweak hazard and treasure spawning
             spawnedObject = Instantiate(
                 treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
                 platformBlock.transform.position + new Vector3(0, spawnHeight, 0),
@@ -50,7 +49,7 @@ public class Rainer : MonoBehaviour {
             spawnedObject = Instantiate(
                 hazardPrefabs[Random.Range(0, hazardPrefabs.Length)],
                 platformBlock.transform.position + new Vector3(0, spawnHeight, 0),
-                Random.rotation);
+                Quaternion.identity);
         }
         
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
