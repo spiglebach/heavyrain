@@ -40,16 +40,19 @@ public class Rainer : MonoBehaviour {
         int spawnHeight = Random.Range(minSpawnHeight, maxSpawnHeight + 1);
         float chance = Random.Range(0f, 1f);
         GameObject spawnedObject;
+        Vector3 spawnPosition = platformBlock.transform.position + new Vector3(0, spawnHeight, 0);
         if (chance > .5f) { // todo randomize & tweak hazard and treasure spawning
+            var treasure = treasurePrefabs[Random.Range(0, treasurePrefabs.Length)];
             spawnedObject = Instantiate(
-                treasurePrefabs[Random.Range(0, treasurePrefabs.Length)],
-                platformBlock.transform.position + new Vector3(0, spawnHeight, 0),
-                Random.rotation);
+                treasure,
+                spawnPosition,
+                treasure.transform.rotation);
         } else {
+            var hazard = hazardPrefabs[Random.Range(0, hazardPrefabs.Length)];
             spawnedObject = Instantiate(
-                hazardPrefabs[Random.Range(0, hazardPrefabs.Length)],
-                platformBlock.transform.position + new Vector3(0, spawnHeight, 0),
-                Quaternion.identity);
+                hazard,
+                spawnPosition,
+                hazard.transform.rotation);
         }
         
         var fallingObject = spawnedObject.GetComponent<FallingObject>();

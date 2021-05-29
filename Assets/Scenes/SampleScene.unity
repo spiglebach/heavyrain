@@ -1994,7 +1994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec61e41af8f9bc4da8f1993fe766cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressionDurationInSeconds: 0.05
   freezeDurationInSeconds: 1
   scoreDisplay: {fileID: 1653717303}
   maxHealth: 3
@@ -2034,6 +2033,7 @@ MonoBehaviour:
   - {fileID: 426337422581755278, guid: 0a819260133633e4593a40cdcd8edc59, type: 3}
   hazardPrefabs:
   - {fileID: 5641531144559595172, guid: d5251b19a446d374ea9db361a5fd3abb, type: 3}
+  - {fileID: 5641531144559595172, guid: 83ec594eb8fc1e14893c5f8c3e11515d, type: 3}
   minSpawnCooldownInSteps: 2
   maxSpawnCooldownInSteps: 4
   minSpawnHeight: 4
