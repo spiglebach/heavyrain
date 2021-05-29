@@ -194,6 +194,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4421312703992094273, guid: a1f316c7b68a10d4e80d13e2fef94e53, type: 3}
   m_PrefabInstance: {fileID: 228340562}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &179777616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179777617}
+  - component: {fileID: 179777619}
+  - component: {fileID: 179777618}
+  m_Layer: 5
+  m_Name: Health Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &179777617
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179777616}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000020217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 808433655}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -237, y: 206.75}
+  m_SizeDelta: {x: 401.85, y: 70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &179777618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179777616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 99ea19c62fd1aee49a6fdb071b798bab, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &179777619
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179777616}
+  m_CullTransparentMesh: 1
 --- !u!1001 &228340562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1171,7 +1246,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 963194227}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1193,6 +1268,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1501320900}
+  - {fileID: 179777617}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1703,7 +1779,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 61
   orthographic: 1
   orthographic size: 5
@@ -1994,10 +2070,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec61e41af8f9bc4da8f1993fe766cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freezeDurationInSeconds: 1
+  freezeDurationInSeconds: 0.5
   scoreDisplay: {fileID: 1653717303}
+  healthSprites:
+  - {fileID: 21300000, guid: 3ea57c4209bb58c4993d7e730360c896, type: 3}
+  - {fileID: 21300000, guid: 5072a06d1ab57424397510ed3d5e74d9, type: 3}
+  - {fileID: 21300000, guid: 5aa2b6140bf928e49b1588946580ca3b, type: 3}
+  - {fileID: 21300000, guid: 232bf589d0560ae4797d8fbff20e59ef, type: 3}
+  - {fileID: 21300000, guid: 99ea19c62fd1aee49a6fdb071b798bab, type: 3}
   maxHealth: 3
-  healthDisplay: {fileID: 0}
+  healthDisplay: {fileID: 179777618}
 --- !u!1 &1107313743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,7 +2679,7 @@ GameObject:
   - component: {fileID: 1501320902}
   - component: {fileID: 1501320901}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Score Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

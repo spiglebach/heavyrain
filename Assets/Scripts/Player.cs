@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     private bool moved;
     private bool waited;
     private bool frozen;
+    private int freezeTurnsLeft;
     private Vector3 movementOrigin;
     private Vector3 movementTarget;
     private DirectionalMovement[] directionalMovements = {
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour {
     };
     
     // Smoothed movement transition variables
-    [SerializeField] private float freezeDurationInSeconds = 1f;
+    [SerializeField] private float freezeDurationInSeconds = .5f;
     private float currentStepProgression = 0;
     
     // Score
@@ -33,14 +34,17 @@ public class Player : MonoBehaviour {
     
     // Health
     private int health;
-    [SerializeField] private int maxHealth = 3;
-    [SerializeField] private Text healthDisplay;
+    [SerializeField] private Sprite[] healthSprites;
+    [SerializeField][Range(1, 5)] private int maxHealth = 3;
+    [SerializeField] private Image healthDisplay;
 
     private void Start() {
         rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
+        health = maxHealth;
         DisplayScore();
+        DisplayHealth();
     }
 
     void Update() {
@@ -60,9 +64,14 @@ public class Player : MonoBehaviour {
         if (frozen) {
             currentStepProgression += Time.deltaTime;
             if (currentStepProgression >= freezeDurationInSeconds) {
-                frozen = false;
+                freezeTurnsLeft--;
+                if (freezeTurnsLeft <= 0) {
+                    frozen = false;
+                    _meshRenderer.material.color = Color.white;
+                } else {
+                    rainer.Fall();
+                }
                 currentStepProgression = 0;
-                _meshRenderer.material.color = Color.white;
             }
             return;
         }
@@ -124,6 +133,7 @@ public class Player : MonoBehaviour {
         frozen = true;
         _meshRenderer.material.color = Color.blue;
         currentStepProgression = 0;
+        freezeTurnsLeft = 2;
         rainer.Fall();
     }
 
@@ -179,7 +189,7 @@ public class Player : MonoBehaviour {
     }
 
     private void DisplayHealth() {
-        // todo implement
+        healthDisplay.sprite = healthSprites[health - 1];
     }
 
     public void RemoveHealth() {
