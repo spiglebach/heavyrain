@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     // Cached object references
-    private Rainer rainer;
+    private Rainer _rainer;
     private MeshRenderer _meshRenderer;
     private SphereCollider _collider;
 
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     private int freezeTurnsLeft;
     private Vector3 movementOrigin;
     private Vector3 movementTarget;
+    private Vector3 previousMoveDirection;
     private DirectionalMovement[] directionalMovements = {
         new DirectionalMovement(Direction.LEFT, new Vector3(1, 0, 0), KeyCode.D),
         new DirectionalMovement(Direction.DOWN, new Vector3(0, 0, -1), KeyCode.S),
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private Image healthDisplay;
 
     private void Start() {
-        rainer = FindObjectOfType<Rainer>();
+        _rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
         health = maxHealth;
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour {
                     frozen = false;
                     _meshRenderer.material.color = Color.white;
                 } else {
-                    rainer.Fall();
+                    _rainer.Fall();
                 }
                 currentStepProgression = 0;
             }
@@ -104,8 +105,6 @@ public class Player : MonoBehaviour {
             if (movement.IsPressed()) {
                 if (IsPlatformPresentInDirection(movement.Direction)) {
                     TakeStep(movement.Direction);
-                    DisableCollider();
-                    rainer.Fall();
                     return;
                 }
             }
@@ -134,11 +133,11 @@ public class Player : MonoBehaviour {
         _meshRenderer.material.color = Color.blue;
         currentStepProgression = 0;
         freezeTurnsLeft = 2;
-        rainer.Fall();
+        _rainer.Fall();
     }
 
     private void Wait() {
-        rainer.Fall();
+        _rainer.Fall();
         waited = true;
         currentStepProgression = 0;
     }
@@ -148,6 +147,16 @@ public class Player : MonoBehaviour {
         currentStepProgression = 0;
         movementOrigin = transform.position;
         movementTarget = movementOrigin + direction;
+        previousMoveDirection = direction;
+        DisableCollider();
+        _rainer.Fall();
+    }
+
+    public void Slip() {
+        var slipDirection = previousMoveDirection;
+        if (IsPlatformPresentInDirection(slipDirection)) {
+            TakeStep(slipDirection);
+        }
     }
 
     private bool IsPlatformPresentInDirection(Vector3 direction) {
@@ -165,7 +174,7 @@ public class Player : MonoBehaviour {
         if (!fallingObject) {
             return;
         }
-        rainer.ObjectPickedUp(fallingObject);
+        _rainer.ObjectPickedUp(fallingObject);
         fallingObject.RemoveFromPlatform();
         fallingObject.ApplyEffect(this);
         Destroy(other.gameObject);

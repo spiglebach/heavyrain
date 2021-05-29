@@ -13,6 +13,11 @@ public class FallingObject : MonoBehaviour {
     public virtual void ApplyEffect(Player player) {
         
     }
+
+    public virtual void Grounded() {
+        
+    }
+    
     public void Fall() {
         falling = true;
         currentTransitionTime = 0;

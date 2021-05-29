@@ -19,6 +19,7 @@ public class PlatformBlock : MonoBehaviour {
         }
         spriteIndex--;
         if (spriteIndex < 0) {
+            currentFallingObject.Grounded();
             DisableRemainingStepDisplay();
             return true;
         }
