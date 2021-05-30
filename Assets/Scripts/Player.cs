@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
@@ -25,6 +26,12 @@ public class Player : MonoBehaviour {
         new DirectionalMovement(Direction.UP, new Vector3(0, 0, 1), KeyCode.W)
     };
     
+    // Waiting / skipping
+    [SerializeField] private Image skipCountDisplay;
+    [SerializeField] private Sprite[] skipSprites;
+    private const int maxSkips = 3;
+    private int skips;
+    
     // Smoothed movement transition variables
     [SerializeField] private float freezeDurationInSeconds = .5f;
     private float currentStepProgression = 0;
@@ -44,8 +51,10 @@ public class Player : MonoBehaviour {
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
         health = maxHealth;
+        skips = maxSkips;
         DisplayScore();
         DisplayHealth();
+        DisplaySkips();
     }
 
     void Update() {
@@ -109,7 +118,7 @@ public class Player : MonoBehaviour {
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (skips > 0 && Input.GetKeyDown(KeyCode.Space)) {
             Wait();
         }
     }
@@ -140,6 +149,11 @@ public class Player : MonoBehaviour {
         _rainer.Fall();
         waited = true;
         currentStepProgression = 0;
+        skips--;
+        if (skips < 0) {
+            skips = 0;
+        }
+        DisplaySkips();
     }
 
     void TakeStep(Vector3 direction) {
@@ -185,6 +199,14 @@ public class Player : MonoBehaviour {
         DisplayScore();
     }
 
+    public void AddSkip() {
+        skips++;
+        if (skips > maxSkips) {
+            skips = maxSkips;
+        }
+        DisplaySkips();
+    }
+
     private void DisplayScore() {
         scoreDisplay.text = score.ToString();
     }
@@ -199,6 +221,10 @@ public class Player : MonoBehaviour {
 
     private void DisplayHealth() {
         healthDisplay.sprite = healthSprites[health - 1];
+    }
+
+    private void DisplaySkips() {
+        skipCountDisplay.sprite = skipSprites[skips];
     }
 
     public void RemoveHealth() {
