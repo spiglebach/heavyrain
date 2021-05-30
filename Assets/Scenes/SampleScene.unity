@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cd976c545e084794f9232074df149a5e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f001991b27a6f0f4dbfa117395297ea2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2056,10 +2056,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skipCountDisplay: {fileID: 855330525}
   skipSprites:
-  - {fileID: 21300000, guid: 4729263ae6c5f3741a4a4924d7db00c0, type: 3}
-  - {fileID: 21300000, guid: 09b50f13577fb474e81cad6551780ba5, type: 3}
-  - {fileID: 21300000, guid: cd976c545e084794f9232074df149a5e, type: 3}
-  - {fileID: 21300000, guid: b1b649ed1dcfabb48a6a4917366077d7, type: 3}
+  - {fileID: 21300000, guid: 650bbe9a14133704c82f569da8e958f5, type: 3}
+  - {fileID: 21300000, guid: c0e6a3af80ddf634cbd53483e5cc8ec9, type: 3}
+  - {fileID: 21300000, guid: f001991b27a6f0f4dbfa117395297ea2, type: 3}
+  - {fileID: 21300000, guid: 084c893574076f445a3e7141f791e85e, type: 3}
   freezeDurationInSeconds: 0.5
   scoreDisplay: {fileID: 1653717303}
   healthSprites:
