@@ -47,7 +47,9 @@ public class Player : MonoBehaviour {
     // Objectives
     [SerializeField] private int ScoreGoal = 1000; // todo display goal progress
     [SerializeField] private float objectiveFlashTimeInSeconds = 0.2f;
+    [SerializeField] private Text reachExitObjectiveDisplay;
     private bool onExit;
+    [SerializeField] private Color objectiveCompleteColor = Color.green;
 
     [SerializeField] private Canvas levelCompleteCanvas;
     [SerializeField] private Canvas gameOverCanvas;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour {
         _collider = GetComponent<SphereCollider>();
         health = maxHealth;
         skips = maxSkips;
+        reachExitObjectiveDisplay.enabled = false;
         levelCompleteCanvas.enabled = false;
         gameOverCanvas.enabled = false;
         DisplayScore();
@@ -233,10 +236,11 @@ public class Player : MonoBehaviour {
 
     private void DisplayScore() {
         if (score >= ScoreGoal) {
-            scoreDisplay.text = ScoreGoal.ToString();
-            scoreDisplay.color = Color.green; // todo find a good color
+            scoreDisplay.text = $"{ScoreGoal.ToString()} score acquired";
+            scoreDisplay.color = objectiveCompleteColor;
+            reachExitObjectiveDisplay.enabled = true;
         } else {
-            scoreDisplay.text = score >= ScoreGoal ? ScoreGoal.ToString() : score + "/" + ScoreGoal;
+            scoreDisplay.text =  $"{score.ToString()}/{ScoreGoal.ToString()} score";
         }
     }
 
@@ -299,13 +303,13 @@ public class Player : MonoBehaviour {
         if (AllObjectivesCompleted()) {
             LevelComplete();
             // todo Save level completion
-            // todo Display next level dialog
         } else {
             FlashIncompleteObjectives();
         }
     }
 
     private void LevelComplete() {
+        reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
         Time.timeScale = 0;
         levelCompleteCanvas.enabled = true;
