@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
@@ -34,7 +31,7 @@ public class Player : MonoBehaviour {
     
     // Smoothed movement transition variables
     [SerializeField] private float freezeDurationInSeconds = .5f;
-    private float currentStepProgression = 0;
+    private float currentStepProgression;
     
     // Score
     private int score;
@@ -45,6 +42,11 @@ public class Player : MonoBehaviour {
     [SerializeField] private Sprite[] healthSprites;
     [SerializeField][Range(1, 5)] private int maxHealth = 3;
     [SerializeField] private Image healthDisplay;
+    
+    // Objectives
+    [SerializeField] private int ScoreGoal = 1000; // todo display goal progress
+    [SerializeField] private float objectiveFlashTimeInSeconds = 0.2f;
+    private bool onExit;
 
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
@@ -68,6 +70,11 @@ public class Player : MonoBehaviour {
                 ClearMovement();
                 currentStepProgression = 0;
                 EnableCollider();
+                if (IsExitAttempt()) {
+                    AttemptExit();
+                } else {
+                    onExit = false;
+                }
             }
             return;
         }
@@ -121,6 +128,14 @@ public class Player : MonoBehaviour {
         if (skips > 0 && Input.GetKeyDown(KeyCode.Space)) {
             Wait();
         }
+    }
+
+    private bool IsExitAttempt() {
+        return Physics.Raycast(
+            transform.position,
+            Vector3.down,
+            2,
+            LayerMask.GetMask("Exit"));
     }
 
     private void EnableCollider() {
@@ -180,7 +195,7 @@ public class Player : MonoBehaviour {
             rayStart, 
             down,
             2,
-            LayerMask.GetMask("Platforms"));
+            LayerMask.GetMask("Platforms", "Exit"));
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -208,7 +223,12 @@ public class Player : MonoBehaviour {
     }
 
     private void DisplayScore() {
-        scoreDisplay.text = score.ToString();
+        if (score >= ScoreGoal) {
+            scoreDisplay.text = ScoreGoal.ToString();
+            scoreDisplay.color = Color.green; // todo find a good color
+        } else {
+            scoreDisplay.text = score >= ScoreGoal ? ScoreGoal.ToString() : score + "/" + ScoreGoal;
+        }
     }
 
     public void AddHealth() {
@@ -238,6 +258,36 @@ public class Player : MonoBehaviour {
 
     private void Die() {
         // todo implement
+    }
+
+    public bool AllObjectivesCompleted() {
+        return score >= ScoreGoal;
+    }
+
+    public void FlashIncompleteObjectives() {
+        if (score < ScoreGoal) {
+            StartCoroutine(FlashScoreDisplay());
+        }
+    }
+
+    private IEnumerator FlashScoreDisplay() {
+        var originalColor = scoreDisplay.color;
+        while (onExit) {
+            scoreDisplay.color = Color.red;
+            yield return new WaitForSeconds(objectiveFlashTimeInSeconds);
+            scoreDisplay.color = originalColor;
+            yield return new WaitForSeconds(objectiveFlashTimeInSeconds);
+        }
+    }
+
+    private void AttemptExit() {
+        onExit = true;
+        if (AllObjectivesCompleted()) {
+            // todo Save level completion
+            // todo Display next level dialog
+        } else {
+            FlashIncompleteObjectives();
+        }
     }
 }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6534658736875564893}
   - component: {fileID: 3274983757017081321}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FallingDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,8 +96,8 @@ GameObject:
   - component: {fileID: 4421312703992094275}
   - component: {fileID: 4421312703992094274}
   - component: {fileID: 6892791973478199094}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 7
+  m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
