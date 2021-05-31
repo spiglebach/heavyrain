@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     private Rainer _rainer;
     private MeshRenderer _meshRenderer;
     private SphereCollider _collider;
+    private Rigidbody _rigidbody;
 
     // Turn based movement variables
     private bool gameOver;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private Sprite[] healthSprites;
     [SerializeField][Range(1, 5)] private int maxHealth = 3;
     [SerializeField] private Image healthDisplay;
+    private Vector3 respawnPosition;
     
     // Objectives
     [SerializeField] private int ScoreGoal = 1000; // todo display goal progress
@@ -58,8 +60,10 @@ public class Player : MonoBehaviour {
         _rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
+        _rigidbody = GetComponent<Rigidbody>();
         health = maxHealth;
         waits = maxWaits;
+        respawnPosition = transform.position;
         reachExitObjectiveDisplay.enabled = false;
         levelCompleteCanvas.enabled = false;
         gameOverCanvas.enabled = false;
@@ -195,9 +199,31 @@ public class Player : MonoBehaviour {
 
     public void Slip() {
         var slipDirection = previousMoveDirection;
-        if (IsPlatformPresentInDirection(slipDirection)) {
-            TakeStep(slipDirection);
-        }
+        TakeStep(slipDirection);
+        if (IsPlatformPresentInDirection(slipDirection)) return;
+        EnableRagdoll();
+    }
+
+    private void EnableRagdoll() {
+        _rigidbody.useGravity = true;
+        _rigidbody.isKinematic = false;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+    }
+
+    private void DisableRagdoll() {
+        _rigidbody.useGravity = false;
+        _rigidbody.isKinematic = true;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    public void FellToDeath() {
+        DisableRagdoll();
+        RemoveHealth();
+        Respawn();
+    }
+
+    private void Respawn() {
+        transform.position = respawnPosition;
     }
 
     private bool IsPlatformPresentInDirection(Vector3 direction) {
