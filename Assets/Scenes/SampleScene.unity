@@ -3065,6 +3065,7 @@ MonoBehaviour:
   treasurePrefabs:
   - {fileID: 2318892420761876412, guid: 52adabf5eee78a945bcb00eec490014e, type: 3}
   - {fileID: 426337422581755278, guid: b97b22c9985be5d47acc4c2c90fa7470, type: 3}
+  powerUpPrefabs:
   - {fileID: 426337422581755278, guid: 0a819260133633e4593a40cdcd8edc59, type: 3}
   - {fileID: 2318892420761876412, guid: 675b24b0221e2574fa75a5b2f27f446b, type: 3}
   hazardPrefabs:
@@ -3076,6 +3077,10 @@ MonoBehaviour:
   minSpawnHeight: 4
   maxSpawnHeight: 6
   fallingObjectsParent: {fileID: 1486133944}
+  hazardSpawnUpperThreshold: 0.3
+  powerUpSpawnUpperThreshold: 0.5
+  canSpawnHazard: 1
+  canSpawnPowerUp: 1
 --- !u!4 &1107313745
 Transform:
   m_ObjectHideFlags: 0
