@@ -17,6 +17,7 @@ public class Rainer : MonoBehaviour {
     [SerializeField] private int maxSpawnCooldownInSteps = 4;
     [SerializeField] private int minSpawnHeight = 4;
     [SerializeField] private int maxSpawnHeight = 6;
+    [SerializeField] private Transform fallingObjectsParent;
     
     private int stepsUntilNextSpawn = 2;
     private HashSet<PlatformBlock> platformBlocks;
@@ -54,7 +55,7 @@ public class Rainer : MonoBehaviour {
                 spawnPosition,
                 hazard.transform.rotation);
         }
-        
+        spawnedObject.transform.SetParent(fallingObjectsParent);
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
         if (fallingObject) {
             platformBlock.SetFallingObject(fallingObject);

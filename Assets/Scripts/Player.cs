@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     private SphereCollider _collider;
 
     // Turn based movement variables
+    private bool gameOver;
     private bool moved;
     private bool waited;
     private bool frozen;
@@ -48,18 +49,26 @@ public class Player : MonoBehaviour {
     [SerializeField] private float objectiveFlashTimeInSeconds = 0.2f;
     private bool onExit;
 
+    [SerializeField] private Canvas levelCompleteCanvas;
+    [SerializeField] private Canvas gameOverCanvas;
+
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
         health = maxHealth;
         skips = maxSkips;
+        levelCompleteCanvas.enabled = false;
+        gameOverCanvas.enabled = false;
         DisplayScore();
         DisplayHealth();
         DisplaySkips();
     }
 
     void Update() {
+        if (gameOver) {
+            return;
+        }
         if (moved) {
             currentStepProgression += Time.deltaTime;
             var percent = currentStepProgression / Rainer.transitionTimeInSeconds;
@@ -156,7 +165,7 @@ public class Player : MonoBehaviour {
         frozen = true;
         _meshRenderer.material.color = Color.blue;
         currentStepProgression = 0;
-        freezeTurnsLeft = 2;
+        freezeTurnsLeft = 5;
         _rainer.Fall();
     }
 
@@ -240,7 +249,11 @@ public class Player : MonoBehaviour {
     }
 
     private void DisplayHealth() {
-        healthDisplay.sprite = healthSprites[health - 1];
+        if (health <= 0) {
+            healthDisplay.enabled = false;
+        } else {
+            healthDisplay.sprite = healthSprites[health - 1];
+        }
     }
 
     private void DisplaySkips() {
@@ -249,15 +262,16 @@ public class Player : MonoBehaviour {
 
     public void RemoveHealth() {
         health--;
-        if (health <= 0) {
-            Die();
-            return;
-        }
         DisplayHealth();
+        if (health <= 0) {
+            GameOver();
+        }
     }
 
-    private void Die() {
-        // todo implement
+    private void GameOver() {
+        gameOver = true;
+        Time.timeScale = 0;
+        gameOverCanvas.enabled = true;
     }
 
     public bool AllObjectivesCompleted() {
@@ -283,11 +297,18 @@ public class Player : MonoBehaviour {
     private void AttemptExit() {
         onExit = true;
         if (AllObjectivesCompleted()) {
+            LevelComplete();
             // todo Save level completion
             // todo Display next level dialog
         } else {
             FlashIncompleteObjectives();
         }
+    }
+
+    private void LevelComplete() {
+        gameOver = true;
+        Time.timeScale = 0;
+        levelCompleteCanvas.enabled = true;
     }
 }
 
