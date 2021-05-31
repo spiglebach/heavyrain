@@ -53,8 +53,8 @@ public class Player : MonoBehaviour {
     private bool onExit;
     [SerializeField] private Color objectiveCompleteColor = Color.green;
 
-    [SerializeField] private Canvas levelCompleteCanvas;
-    [SerializeField] private Canvas gameOverCanvas;
+    [SerializeField] private GameObject levelCompleteOverlay;
+    [SerializeField] private GameObject gameOverOverlay;
 
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
@@ -65,8 +65,8 @@ public class Player : MonoBehaviour {
         waits = maxWaits;
         respawnPosition = transform.position;
         reachExitObjectiveDisplay.enabled = false;
-        levelCompleteCanvas.enabled = false;
-        gameOverCanvas.enabled = false;
+        levelCompleteOverlay.SetActive(false);
+        gameOverOverlay.SetActive(false);
         DisplayScore();
         DisplayHealth();
         DisplayWaitCount();
@@ -299,7 +299,7 @@ public class Player : MonoBehaviour {
     private void GameOver() {
         gameOver = true;
         Time.timeScale = 0;
-        gameOverCanvas.enabled = true;
+        gameOverOverlay.SetActive(true);
     }
 
     public bool AllObjectivesCompleted() {
@@ -336,7 +336,7 @@ public class Player : MonoBehaviour {
         reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
         Time.timeScale = 0;
-        levelCompleteCanvas.enabled = true;
+        levelCompleteOverlay.SetActive(true);
     }
 }
 
