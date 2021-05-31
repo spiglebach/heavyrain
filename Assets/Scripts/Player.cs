@@ -24,11 +24,11 @@ public class Player : MonoBehaviour {
         new DirectionalMovement(Direction.UP, new Vector3(0, 0, 1), KeyCode.W)
     };
     
-    // Waiting / skipping
-    [SerializeField] private Image skipCountDisplay;
-    [SerializeField] private Sprite[] skipSprites;
-    private const int maxSkips = 3;
-    private int skips;
+    // Waiting
+    [SerializeField] private Image waitCountDisplay;
+    [SerializeField] private Sprite[] waitSprites;
+    private const int maxWaits = 3;
+    private int waits;
     
     // Smoothed movement transition variables
     [SerializeField] private float freezeDurationInSeconds = .5f;
@@ -59,13 +59,13 @@ public class Player : MonoBehaviour {
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
         health = maxHealth;
-        skips = maxSkips;
+        waits = maxWaits;
         reachExitObjectiveDisplay.enabled = false;
         levelCompleteCanvas.enabled = false;
         gameOverCanvas.enabled = false;
         DisplayScore();
         DisplayHealth();
-        DisplaySkips();
+        DisplayWaitCount();
     }
 
     void Update() {
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour {
                 }
             }
         }
-        if (skips > 0 && Input.GetKeyDown(KeyCode.Space)) {
+        if (waits > 0 && Input.GetKeyDown(KeyCode.Space)) {
             Wait();
         }
     }
@@ -176,11 +176,11 @@ public class Player : MonoBehaviour {
         _rainer.Fall();
         waited = true;
         currentStepProgression = 0;
-        skips--;
-        if (skips < 0) {
-            skips = 0;
+        waits--;
+        if (waits < 0) {
+            waits = 0;
         }
-        DisplaySkips();
+        DisplayWaitCount();
     }
 
     void TakeStep(Vector3 direction) {
@@ -226,21 +226,19 @@ public class Player : MonoBehaviour {
         DisplayScore();
     }
 
-    public void AddSkip() {
-        skips++;
-        if (skips > maxSkips) {
-            skips = maxSkips;
+    public void AddWait() {
+        waits++;
+        if (waits > maxWaits) {
+            waits = maxWaits;
         }
-        DisplaySkips();
+        DisplayWaitCount();
     }
 
     private void DisplayScore() {
+        scoreDisplay.text =  $"{score.ToString()}/{ScoreGoal.ToString()} score";
         if (score >= ScoreGoal) {
-            scoreDisplay.text = $"{ScoreGoal.ToString()} score acquired";
             scoreDisplay.color = objectiveCompleteColor;
             reachExitObjectiveDisplay.enabled = true;
-        } else {
-            scoreDisplay.text =  $"{score.ToString()}/{ScoreGoal.ToString()} score";
         }
     }
 
@@ -260,8 +258,8 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void DisplaySkips() {
-        skipCountDisplay.sprite = skipSprites[skips];
+    private void DisplayWaitCount() {
+        waitCountDisplay.sprite = waitSprites[waits];
     }
 
     public void RemoveHealth() {
