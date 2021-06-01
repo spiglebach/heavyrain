@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2318892420761876411}
   - component: {fileID: -3582112528635705565}
   m_Layer: 0
-  m_Name: Treasure 1
+  m_Name: Gold Nugget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,13 +28,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2318892420761876412}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.2896165, w: 0.9571428}
   m_LocalPosition: {x: 0.08, y: 11.38, z: -0.11}
   m_LocalScale: {x: 0.5, y: 0.2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 33.67}
 --- !u!33 &2318892420761876409
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -127,5 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738374e634f08504e972a3da4be3fbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionTimeInSeconds: 0.05
   scoreAward: 100
