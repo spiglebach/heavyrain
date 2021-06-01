@@ -298,7 +298,6 @@ public class Player : MonoBehaviour {
 
     private void GameOver() {
         gameOver = true;
-        Time.timeScale = 0;
         gameOverOverlay.SetActive(true);
     }
 
@@ -335,7 +334,6 @@ public class Player : MonoBehaviour {
     private void LevelComplete() {
         reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
-        Time.timeScale = 0;
         levelCompleteOverlay.SetActive(true);
     }
 }

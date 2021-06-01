@@ -95,8 +95,9 @@ GameObject:
   - component: {fileID: 4421312703992094276}
   - component: {fileID: 4421312703992094275}
   - component: {fileID: 4421312703992094274}
+  - component: {fileID: -6821147064235126295}
   m_Layer: 7
-  m_Name: FakePlatform
+  m_Name: ScriptedPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,3 +182,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6821147064235126295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421312703992094272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7b7ef9ce7d3fe44b36b4aee24af188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallRemainderDisplaySprites:
+  - {fileID: 21300000, guid: 168295282ae8de7499e633ab228fe4d0, type: 3}
+  - {fileID: 21300000, guid: bd39e9d8eb9e9d146b5d3912fb037f65, type: 3}
+  - {fileID: 21300000, guid: 2ae212a8d05afdc4e83049cd3a044770, type: 3}
+  - {fileID: 21300000, guid: 06b4506140e743c4f99bdf5da2d29bc5, type: 3}
+  - {fileID: 21300000, guid: dce2c084f1a07b54abc639424bce9dd0, type: 3}
+  spawnablePrefab: {fileID: 2318892420761876412, guid: 52adabf5eee78a945bcb00eec490014e, type: 3}
+  spawnHeight: 3

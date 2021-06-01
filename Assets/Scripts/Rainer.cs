@@ -24,6 +24,7 @@ public class Rainer : MonoBehaviour {
     [SerializeField] private float powerUpSpawnUpperThreshold = 0.5f;
     [SerializeField] private bool canSpawnHazard;
     [SerializeField] private bool canSpawnPowerUp;
+    [SerializeField] private bool spawningDisabled;
     
     private int stepsUntilNextSpawn = 2;
     private HashSet<PlatformBlock> platformBlocks;
@@ -38,7 +39,7 @@ public class Rainer : MonoBehaviour {
     }
 
     private void Spawn() {
-        if (treasurePrefabs == null || treasurePrefabs.Length <= 0) {
+        if (spawningDisabled || treasurePrefabs == null || treasurePrefabs.Length <= 0) {
             return;
         }
         if (possibleSpawningBlocks.Count <= 0) {
@@ -69,6 +70,22 @@ public class Rainer : MonoBehaviour {
                 spawnPosition,
                 treasure.transform.rotation);
         }
+        spawnedObject.transform.SetParent(fallingObjectsParent);
+        var fallingObject = spawnedObject.GetComponent<FallingObject>();
+        if (fallingObject) {
+            platformBlock.SetFallingObject(fallingObject);
+            platformsWithFallingObject.Add(platformBlock);
+        }
+    }
+
+    public void SpawnScripted(ScriptedPlatformBlock scriptedPlatformBlock) {
+        PlatformBlock platformBlock = scriptedPlatformBlock;
+        var spawnablePrefab = scriptedPlatformBlock.GetSpawnablePrefab();
+        Vector3 spawnPosition = platformBlock.transform.position + new Vector3(0, scriptedPlatformBlock.GetSpawnHeight(), 0);
+        var spawnedObject = Instantiate(
+            spawnablePrefab,
+            spawnPosition,
+            spawnablePrefab.transform.rotation);
         spawnedObject.transform.SetParent(fallingObjectsParent);
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
         if (fallingObject) {

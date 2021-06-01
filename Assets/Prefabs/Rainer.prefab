@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2557072347952662839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2557072347952662825}
+  - component: {fileID: 2557072347952662824}
+  m_Layer: 0
+  m_Name: Rainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2557072347952662825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557072347952662839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2557072347952662824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2557072347952662839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd69128dae8e3d0478f82daa3caa27fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasurePrefabs:
+  - {fileID: 2318892420761876412, guid: 52adabf5eee78a945bcb00eec490014e, type: 3}
+  - {fileID: 426337422581755278, guid: b97b22c9985be5d47acc4c2c90fa7470, type: 3}
+  powerUpPrefabs:
+  - {fileID: 426337422581755278, guid: 0a819260133633e4593a40cdcd8edc59, type: 3}
+  - {fileID: 2318892420761876412, guid: 675b24b0221e2574fa75a5b2f27f446b, type: 3}
+  hazardPrefabs:
+  - {fileID: 5641531144559595172, guid: d5251b19a446d374ea9db361a5fd3abb, type: 3}
+  - {fileID: 5641531144559595172, guid: 83ec594eb8fc1e14893c5f8c3e11515d, type: 3}
+  - {fileID: 5641531144559595172, guid: 3b513993cb6ae4e41bab9c90d58ac89e, type: 3}
+  minSpawnCooldownInSteps: 2
+  maxSpawnCooldownInSteps: 4
+  minSpawnHeight: 4
+  maxSpawnHeight: 6
+  fallingObjectsParent: {fileID: 0}
+  hazardSpawnUpperThreshold: 0.3
+  powerUpSpawnUpperThreshold: 0.5
+  canSpawnHazard: 1
+  canSpawnPowerUp: 1
+  spawningDisabled: 0

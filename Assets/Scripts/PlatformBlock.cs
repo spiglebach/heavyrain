@@ -8,7 +8,7 @@ public class PlatformBlock : MonoBehaviour {
     private SpriteRenderer _spriteRenderer;
     private int spriteIndex;
 
-    void Start() {
+    protected virtual void Start() {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         DisableRemainingStepDisplay();
     }
