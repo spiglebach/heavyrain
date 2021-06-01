@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FallingObject : MonoBehaviour {
+    [SerializeField] private AudioClip pickupClip;
     private PlatformBlock _platformBlock;
     private bool falling;
     private float currentTransitionTime;
@@ -11,7 +12,9 @@ public class FallingObject : MonoBehaviour {
     private Vector3 targetPosition;
 
     public virtual void ApplyEffect(Player player) {
-        
+        if (pickupClip) {
+            AudioSource.PlayClipAtPoint(pickupClip, transform.position);
+        }
     }
 
     public virtual void Grounded() {

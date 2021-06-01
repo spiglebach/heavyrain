@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88660bdcd8d40dc4e9324478b3c8b910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupClip: {fileID: 8300000, guid: 034933fbebfb4ac46851fb6b612d31d9, type: 3}
 --- !u!95 &8097525012829081627
 Animator:
   serializedVersion: 3
