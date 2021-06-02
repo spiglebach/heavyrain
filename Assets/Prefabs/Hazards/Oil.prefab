@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8eeee6cb1da6204a80d491943e9f281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupClip: {fileID: 8300000, guid: 72b23a81de54b5c408ca301049eaac32, type: 3}
   fallingLook: {fileID: 6439556405975593569}
   groundedLook: {fileID: 2838596757940334496}
 --- !u!1001 &3145150158817645297

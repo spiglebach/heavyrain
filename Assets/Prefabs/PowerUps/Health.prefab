@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88660bdcd8d40dc4e9324478b3c8b910, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupClip: {fileID: 8300000, guid: 034933fbebfb4ac46851fb6b612d31d9, type: 3}
+  pickupClip: {fileID: 8300000, guid: 575474f99c4598e479673eaaa8dee5a7, type: 3}
 --- !u!95 &8097525012829081627
 Animator:
   serializedVersion: 3
@@ -109,15 +109,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9394a4b014117264ab5029c9e87df767, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9394a4b014117264ab5029c9e87df767, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9394a4b014117264ab5029c9e87df767, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9394a4b014117264ab5029c9e87df767, type: 3}
       propertyPath: m_LocalPosition.x

@@ -55,6 +55,12 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private GameObject levelCompleteOverlay;
     [SerializeField] private GameObject gameOverOverlay;
+    
+    // Sounds
+    [SerializeField] private AudioClip levelCompleteClip;
+    [SerializeField] private AudioClip gameOverClip;
+    [SerializeField] private AudioClip[] damageClips;
+    [SerializeField] private AudioClip waitClip;
 
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
@@ -177,6 +183,9 @@ public class Player : MonoBehaviour {
     }
 
     private void Wait() {
+        if (waitClip) {
+            AudioSource.PlayClipAtPoint(waitClip, transform.position);
+        }
         _rainer.Fall();
         waited = true;
         currentStepProgression = 0;
@@ -293,10 +302,16 @@ public class Player : MonoBehaviour {
         DisplayHealth();
         if (health <= 0) {
             GameOver();
+        } else if (damageClips != null && damageClips.Length > 0) {
+            var clip = damageClips[Random.Range(0, damageClips.Length)];
+            AudioSource.PlayClipAtPoint(clip, transform.position);
         }
     }
 
     private void GameOver() {
+        if (gameOverClip) {
+            AudioSource.PlayClipAtPoint(gameOverClip, transform.position);
+        }
         gameOver = true;
         gameOverOverlay.SetActive(true);
     }
@@ -332,6 +347,9 @@ public class Player : MonoBehaviour {
     }
 
     private void LevelComplete() {
+        if (levelCompleteClip) {
+            AudioSource.PlayClipAtPoint(levelCompleteClip, transform.position);
+        }
         reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
         levelCompleteOverlay.SetActive(true);

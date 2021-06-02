@@ -148,3 +148,5 @@ MonoBehaviour:
   objectiveCompleteColor: {r: 0, g: 1, b: 0, a: 1}
   levelCompleteOverlay: {fileID: 0}
   gameOverOverlay: {fileID: 0}
+  levelCompleteClip: {fileID: 8300000, guid: 6002ca329bd06054d9dd1f21ab77a0e5, type: 3}
+  gameOverClip: {fileID: 8300000, guid: d20f31bfe7ecc114e8e60385595e4c1c, type: 3}
