@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2138346684522697593}
   - component: {fileID: 8383038442899201555}
   - component: {fileID: 9220051205375750961}
+  - component: {fileID: 3649418381930132559}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -76,6 +77,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &3649418381930132559
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641531144559595172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d46c7ac03404e54f86b3ee6a236904f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7329436731667119369
 PrefabInstance:
   m_ObjectHideFlags: 0

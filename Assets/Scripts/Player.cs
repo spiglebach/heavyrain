@@ -1,12 +1,11 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     // Cached object references
     private Rainer _rainer;
-    private MeshRenderer _meshRenderer;
+    private Animator _animator;
     private SphereCollider _collider;
     private Rigidbody _rigidbody;
 
@@ -66,11 +65,13 @@ public class Player : MonoBehaviour {
     [SerializeField] private AudioClip gameOverClip;
     [SerializeField] private AudioClip[] damageClips;
     [SerializeField] private AudioClip waitClip;
+    private static readonly int Frozen = Animator.StringToHash("Frozen");
+    private static readonly int Moving = Animator.StringToHash("Moving");
+    private static readonly int Damaged = Animator.StringToHash("Damaged");
 
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
-        _meshRenderer = GetComponent<MeshRenderer>();
-        _meshRenderer.enabled = false;
+        _animator = GetComponent<Animator>();
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         health = maxHealth;
@@ -102,6 +103,7 @@ public class Player : MonoBehaviour {
             if (currentStepProgression >= Rainer.transitionTimeInSeconds) {
                 transform.position = movementTarget;
                 moved = false;
+                _animator.SetBool(Moving, false);
                 ClearMovement();
                 currentStepProgression = 0;
                 EnableCollider();
@@ -121,7 +123,7 @@ public class Player : MonoBehaviour {
                 freezeTurnsLeft--;
                 if (freezeTurnsLeft <= 0) {
                     frozen = false;
-                    _meshRenderer.enabled = false;
+                    _animator.SetBool(Frozen, false);
                 }
                 else {
                     _rainer.Fall();
@@ -216,7 +218,7 @@ public class Player : MonoBehaviour {
         currentStepProgression = 0;
         freezeTurnsLeft = 5;
         _rainer.Fall();
-        _meshRenderer.enabled = true;
+        _animator.SetBool(Frozen, true);
     }
 
     private void Wait() {
@@ -235,6 +237,7 @@ public class Player : MonoBehaviour {
 
     void TakeStep(Vector3 direction) {
         moved = true;
+        _animator.SetBool(Moving, true);
         currentStepProgression = 0;
         movementOrigin = transform.position;
         movementTarget = movementOrigin + direction;
@@ -337,6 +340,7 @@ public class Player : MonoBehaviour {
     public void RemoveHealth() {
         health--;
         DisplayHealth();
+        _animator.SetTrigger(Damaged);
         if (health <= 0) {
             GameOver();
         } else if (damageClips != null && damageClips.Length > 0) {
@@ -346,6 +350,7 @@ public class Player : MonoBehaviour {
     }
 
     private void GameOver() {
+        EnableRagdoll();
         if (gameOverClip) {
             AudioSource.PlayClipAtPoint(gameOverClip, transform.position);
         }
@@ -390,6 +395,10 @@ public class Player : MonoBehaviour {
         reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
         levelCompleteOverlay.SetActive(true);
+    }
+
+    public bool IsGameOver() {
+        return gameOver;
     }
 }
 
