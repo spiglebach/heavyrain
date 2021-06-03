@@ -23,7 +23,9 @@ public class PlatformBlock : MonoBehaviour {
             DisableRemainingStepDisplay();
             return true;
         }
-        _spriteRenderer.sprite = fallRemainderDisplaySprites[spriteIndex];
+        if (spriteIndex < fallRemainderDisplaySprites.Length) {
+            _spriteRenderer.sprite = fallRemainderDisplaySprites[spriteIndex];
+        }
         return false;
     }
 

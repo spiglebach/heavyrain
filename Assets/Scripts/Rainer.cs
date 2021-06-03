@@ -90,7 +90,11 @@ public class Rainer : MonoBehaviour {
         var fallingObject = spawnedObject.GetComponent<FallingObject>();
         if (fallingObject) {
             platformBlock.SetFallingObject(fallingObject);
-            platformsWithFallingObject.Add(platformBlock);
+            if (scriptedPlatformBlock.GetSpawnHeight() <= 1) {
+                fallingObject.Grounded();
+            } else {
+                platformsWithFallingObject.Add(platformBlock);
+            }
         }
     }
 

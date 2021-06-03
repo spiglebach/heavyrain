@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,10 @@ public class Player : MonoBehaviour {
         new DirectionalMovement(Direction.UP, new Vector3(0, 0, 1), KeyCode.W)
     };
     
+    // Pausing
+    [SerializeField] private GameObject pauseMenuOverlay;
+    private bool paused;
+
     // Waiting
     [SerializeField] private Image waitCountDisplay;
     [SerializeField] private Sprite[] waitSprites;
@@ -65,6 +70,7 @@ public class Player : MonoBehaviour {
     private void Start() {
         _rainer = FindObjectOfType<Rainer>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer.enabled = false;
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         health = maxHealth;
@@ -73,6 +79,7 @@ public class Player : MonoBehaviour {
         reachExitObjectiveDisplay.enabled = false;
         levelCompleteOverlay.SetActive(false);
         gameOverOverlay.SetActive(false);
+        pauseMenuOverlay.SetActive(false);
         DisplayScore();
         DisplayHealth();
         DisplayWaitCount();
@@ -80,6 +87,12 @@ public class Player : MonoBehaviour {
 
     void Update() {
         if (gameOver) {
+            return;
+        }
+        if (paused) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                Unpause();
+            }
             return;
         }
         if (moved) {
@@ -94,34 +107,42 @@ public class Player : MonoBehaviour {
                 EnableCollider();
                 if (IsExitAttempt()) {
                     AttemptExit();
-                } else {
+                }
+                else {
                     onExit = false;
                 }
             }
             return;
         }
+
         if (frozen) {
             currentStepProgression += Time.deltaTime;
             if (currentStepProgression >= freezeDurationInSeconds) {
                 freezeTurnsLeft--;
                 if (freezeTurnsLeft <= 0) {
                     frozen = false;
-                    _meshRenderer.material.color = Color.white;
-                } else {
+                    _meshRenderer.enabled = false;
+                }
+                else {
                     _rainer.Fall();
                 }
+
                 currentStepProgression = 0;
             }
+
             return;
         }
+
         if (waited) {
             currentStepProgression += Time.deltaTime;
             if (currentStepProgression >= Rainer.transitionTimeInSeconds) {
                 waited = false;
                 currentStepProgression = 0;
             }
+
             return;
         }
+
         for (var i = 0; i < directionalMovements.Length; i++) {
             var movement = directionalMovements[i];
             if (movement.IsPressed()) {
@@ -130,6 +151,7 @@ public class Player : MonoBehaviour {
                         movement.SetPressed(false);
                     }
                 }
+
                 continue;
             }
 
@@ -147,9 +169,24 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+
         if (waits > 0 && Input.GetKeyDown(KeyCode.Space)) {
             Wait();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Pause();
+        }
+    }
+
+    private void Pause() {
+        paused = true;
+        pauseMenuOverlay.SetActive(true);
+    }
+    
+    public void Unpause() {
+        paused = false;
+        pauseMenuOverlay.SetActive(false);
     }
 
     private bool IsExitAttempt() {
@@ -176,10 +213,10 @@ public class Player : MonoBehaviour {
 
     public void Freeze() {
         frozen = true;
-        _meshRenderer.material.color = Color.blue;
         currentStepProgression = 0;
         freezeTurnsLeft = 5;
         _rainer.Fall();
+        _meshRenderer.enabled = true;
     }
 
     private void Wait() {
