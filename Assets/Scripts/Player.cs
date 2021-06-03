@@ -24,6 +24,8 @@ public class Player : MonoBehaviour {
         new DirectionalMovement(Direction.RIGHT, new Vector3(-1, 0, 0), KeyCode.A),
         new DirectionalMovement(Direction.UP, new Vector3(0, 0, 1), KeyCode.W)
     };
+
+    [SerializeField] private int slipDistance = 2;
     
     // Pausing
     [SerializeField] private GameObject pauseMenuOverlay;
@@ -247,7 +249,7 @@ public class Player : MonoBehaviour {
     }
 
     public void Slip() {
-        var slipDirection = previousMoveDirection;
+        var slipDirection = previousMoveDirection * slipDistance;
         TakeStep(slipDirection);
         if (IsPlatformPresentInDirection(slipDirection)) return;
         EnableRagdoll();
