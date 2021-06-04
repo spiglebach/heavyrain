@@ -702,6 +702,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6497316293263079050, guid: e9318a44323bc9547bff1385b13d800c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6497316294406890061, guid: e9318a44323bc9547bff1385b13d800c, type: 3}
       propertyPath: m_Name
       value: Overlay Canvas
