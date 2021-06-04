@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     private Animator _animator;
     private SphereCollider _collider;
     private Rigidbody _rigidbody;
+    private LevelLoader _levelLoader;
 
     // Turn based movement variables
     private bool gameOver;
@@ -76,6 +77,7 @@ public class Player : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
+        _levelLoader = FindObjectOfType<LevelLoader>();
         health = maxHealth;
         waits = maxWaits;
         respawnPosition = transform.position;
@@ -394,6 +396,8 @@ public class Player : MonoBehaviour {
         if (levelCompleteClip) {
             AudioSource.PlayClipAtPoint(levelCompleteClip, transform.position);
         }
+        _levelLoader.LevelComplete();
+        Debug.Log("Progress saved!");
         reachExitObjectiveDisplay.color = objectiveCompleteColor;
         gameOver = true;
         levelCompleteOverlay.SetActive(true);
