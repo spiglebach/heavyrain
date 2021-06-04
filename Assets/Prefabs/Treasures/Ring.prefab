@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupClip: {fileID: 8300000, guid: a594aef3cec7f5c4587e15a068197cae, type: 3}
-  scoreAward: 60
+  scoreAward: 75
 --- !u!95 &6219830861182721486
 Animator:
   serializedVersion: 3

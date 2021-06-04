@@ -252,6 +252,14 @@ PrefabInstance:
       propertyPath: fallingObjectsParent
       value: 
       objectReference: {fileID: 1621897909}
+    - target: {fileID: 2557072347952662824, guid: 8a041f72a94233546b1bc93b38f793e7, type: 3}
+      propertyPath: treasurePrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557072347952662824, guid: 8a041f72a94233546b1bc93b38f793e7, type: 3}
+      propertyPath: treasurePrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 426337422581755278, guid: b97b22c9985be5d47acc4c2c90fa7470, type: 3}
     - target: {fileID: 2557072347952662825, guid: 8a041f72a94233546b1bc93b38f793e7, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -687,6 +695,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 698152675}
     m_Modifications:
+    - target: {fileID: -6821147064235126295, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
+      propertyPath: spawnablePrefab
+      value: 
+      objectReference: {fileID: 2318892420761876412, guid: 1902c46ec0a2ecf4f9834e0798766513, type: 3}
     - target: {fileID: 4421312703992094272, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
       propertyPath: m_Name
       value: ScriptedPlatform

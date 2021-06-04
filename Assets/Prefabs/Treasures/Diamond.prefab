@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupClip: {fileID: 8300000, guid: a594aef3cec7f5c4587e15a068197cae, type: 3}
-  scoreAward: 420
+  scoreAward: 600
 --- !u!1001 &1716680220260294792
 PrefabInstance:
   m_ObjectHideFlags: 0
