@@ -316,7 +316,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6821147064235126295, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
       propertyPath: spawnHeight
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -6821147064235126295, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
       propertyPath: spawnablePrefab
@@ -1299,7 +1299,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6821147064235126295, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
       propertyPath: spawnHeight
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6821147064235126295, guid: 31592afe4869e224f89a09decaee9b4f, type: 3}
       propertyPath: spawnablePrefab
