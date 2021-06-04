@@ -49,6 +49,10 @@ public class LevelLoader : MonoBehaviour {
     public void LoadLevelIfUnlocked(int buildIndex) {
         SceneManager.LoadScene(buildIndex);
     }
+
+    public void LoadSettings() {
+        SceneManager.LoadScene("Settings");
+    }
 }
 
 public enum LevelStatus {
