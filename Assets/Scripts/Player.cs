@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour {
     
     // Score
     private int score;
-    [SerializeField] private Text scoreDisplay;
+    [SerializeField] private TMP_Text scoreDisplay;
     
     // Health
     private int health;
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour {
     // Objectives
     [SerializeField] private int ScoreGoal = 1000; // todo display goal progress
     [SerializeField] private float objectiveFlashTimeInSeconds = 0.2f;
-    [SerializeField] private Text reachExitObjectiveDisplay;
+    [SerializeField] private TMP_Text reachExitObjectiveDisplay;
     private bool onExit;
     [SerializeField] private Color objectiveCompleteColor = Color.green;
 
