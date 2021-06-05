@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     private SphereCollider _collider;
     private Rigidbody _rigidbody;
     private LevelLoader _levelLoader;
+    private SoundSettings _soundSettings;
 
     // Turn based movement variables
     private bool gameOver;
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour {
         _collider = GetComponent<SphereCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _levelLoader = FindObjectOfType<LevelLoader>();
+        _soundSettings = FindObjectOfType<SoundSettings>();
         health = maxHealth;
         waits = maxWaits;
         respawnPosition = transform.position;
@@ -228,7 +230,7 @@ public class Player : MonoBehaviour {
 
     private void Wait() {
         if (waitClip) {
-            AudioSource.PlayClipAtPoint(waitClip, transform.position);
+            PlayClip(waitClip);
         }
         _rainer.Fall();
         waited = true;
@@ -350,14 +352,14 @@ public class Player : MonoBehaviour {
             GameOver();
         } else if (damageClips != null && damageClips.Length > 0) {
             var clip = damageClips[Random.Range(0, damageClips.Length)];
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+            PlayClip(clip);
         }
     }
 
     private void GameOver() {
         EnableRagdoll();
         if (gameOverClip) {
-            AudioSource.PlayClipAtPoint(gameOverClip, transform.position);
+            PlayClip(gameOverClip);
         }
         gameOver = true;
         gameOverOverlay.SetActive(true);
@@ -395,7 +397,7 @@ public class Player : MonoBehaviour {
 
     private void LevelComplete() {
         if (levelCompleteClip) {
-            AudioSource.PlayClipAtPoint(levelCompleteClip, transform.position);
+            PlayClip(levelCompleteClip);
         }
         _levelLoader.LevelComplete();
         Debug.Log("Progress saved!");
@@ -406,6 +408,14 @@ public class Player : MonoBehaviour {
 
     public bool IsGameOver() {
         return gameOver;
+    }
+
+    public void PlayClip(AudioClip clip) {
+        float volume = 1f;
+        if (_soundSettings) {
+            volume = _soundSettings.GetCompositeSfxVolume();
+        }
+        AudioSource.PlayClipAtPoint(clip, transform.position, volume);
     }
 }
 

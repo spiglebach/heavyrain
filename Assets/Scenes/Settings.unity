@@ -416,63 +416,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &131639065
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562162, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3953164174293562164, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
-      propertyPath: m_Name
-      value: MusicPlayer
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e5102f92b4779bc4da6d51184d6f2010, type: 3}
 --- !u!1 &152532735
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +717,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3980614985158595736, guid: e1e609f7ead7781478999daac1d2e226, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3980614985158595736, guid: e1e609f7ead7781478999daac1d2e226, type: 3}
       propertyPath: m_LocalPosition.x
@@ -834,7 +777,7 @@ GameObject:
   - component: {fileID: 414253148}
   - component: {fileID: 414253147}
   m_Layer: 5
-  m_Name: Master Volume (1)
+  m_Name: Music Volume Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1201,6 +1144,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593431012}
   m_CullTransparentMesh: 1
+--- !u!1 &599918440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 599918442}
+  - component: {fileID: 599918441}
+  m_Layer: 0
+  m_Name: Sound Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &599918441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599918440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a4b10b3892eae04dbc674a03fb0cabb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterVolumeSlider: {fileID: 807694696}
+  musicVolumeSlider: {fileID: 622646700}
+  sfxVolumeSlider: {fileID: 1470856270}
+  sampleClips:
+  - {fileID: 8300000, guid: 0074d3c7b2519394a99cf9732a5a4b76, type: 3}
+  - {fileID: 8300000, guid: 5929404f940892c43983331db884e16a, type: 3}
+  - {fileID: 8300000, guid: 6be396ac7cb3a6f4dab41a6d3681c712, type: 3}
+  - {fileID: 8300000, guid: 575474f99c4598e479673eaaa8dee5a7, type: 3}
+  - {fileID: 8300000, guid: 72b23a81de54b5c408ca301049eaac32, type: 3}
+  - {fileID: 8300000, guid: f46684bf8d3e39341aadaf6cc38a23dc, type: 3}
+--- !u!4 &599918442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599918440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &622646698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1208,7 @@ GameObject:
   - component: {fileID: 622646699}
   - component: {fileID: 622646700}
   m_Layer: 5
-  m_Name: Slider (1)
+  m_Name: Music Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1303,7 +1299,7 @@ GameObject:
   - component: {fileID: 658364509}
   - component: {fileID: 658364508}
   m_Layer: 5
-  m_Name: Master Volume
+  m_Name: Master Volume Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1583,7 +1579,7 @@ GameObject:
   - component: {fileID: 807694695}
   - component: {fileID: 807694696}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: Master Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,19 +1657,7 @@ MonoBehaviour:
   m_Value: 0.3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1061039773}
-        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
-        m_MethodName: SetMasterVolume
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1028014412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,7 +1703,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9192420179246644440, guid: eb0c18839a6f72047a375dad326c53b4, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9192420179246644440, guid: eb0c18839a6f72047a375dad326c53b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1940,7 +1924,7 @@ GameObject:
   - component: {fileID: 1429524769}
   - component: {fileID: 1429524768}
   m_Layer: 5
-  m_Name: Master Volume (2)
+  m_Name: SFX Volume Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2073,7 +2057,7 @@ GameObject:
   - component: {fileID: 1470856269}
   - component: {fileID: 1470856270}
   m_Layer: 5
-  m_Name: Slider (2)
+  m_Name: SFX Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2533,6 +2517,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1622027800}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
         m_MethodName: LoadMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1061039773}
+        m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
+        m_MethodName: Persist
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

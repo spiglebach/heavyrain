@@ -13,7 +13,12 @@ public class FallingObject : MonoBehaviour {
 
     public virtual void ApplyEffect(Player player) {
         if (pickupClip) {
-            AudioSource.PlayClipAtPoint(pickupClip, transform.position);
+            var soundSettings = FindObjectOfType<SoundSettings>();
+            float volume = 1f;
+            if (soundSettings) {
+                volume = soundSettings.GetCompositeSfxVolume();
+            }
+            AudioSource.PlayClipAtPoint(pickupClip, transform.position, volume);
         }
     }
 
