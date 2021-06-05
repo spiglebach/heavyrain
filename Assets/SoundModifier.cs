@@ -34,7 +34,7 @@ public class SoundModifier : MonoBehaviour {
         _soundSettings.SetSfxVolume(newValue);
         if (sampleClips.Length > 0) {
             var clip = sampleClips[Random.Range(0, sampleClips.Length)];
-            AudioSource.PlayClipAtPoint(clip, Vector3.zero, newValue);
+            AudioSource.PlayClipAtPoint(clip, Vector3.zero, _soundSettings.GetCompositeSfxVolume());
         }
     }
 
