@@ -608,11 +608,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Template_3D
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: C:\Dev\HeavyRain\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: Spiglebach
+  metroCertificateIssuer: Spiglebach
+  metroCertificateNotAfter: 00ac35afdf78d801
   metroApplicationDescription: Template_3D
   wsaImages: {}
   metroTileShortName: 
