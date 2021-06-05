@@ -23,6 +23,7 @@ public class SoundModifier : MonoBehaviour {
     public void OnMasterVolumeChanged(float newValue) {
         _soundSettings.SetMasterVolume(newValue);
         AdjustMusicVolume();
+        PreviewSfxVolume();
     }
 
     public void OnMusicVolumeChanged(float newValue) {
@@ -32,6 +33,10 @@ public class SoundModifier : MonoBehaviour {
 
     public void OnSfxVolumeChanged(float newValue) {
         _soundSettings.SetSfxVolume(newValue);
+        PreviewSfxVolume();
+    }
+
+    private void PreviewSfxVolume() {
         if (sampleClips.Length > 0) {
             var clip = sampleClips[Random.Range(0, sampleClips.Length)];
             AudioSource.PlayClipAtPoint(clip, Vector3.zero, _soundSettings.GetCompositeSfxVolume());
