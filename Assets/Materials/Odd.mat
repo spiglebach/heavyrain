@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Odd
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: GEOM_TYPE_BRANCH _REMOVEDIAG_ON
-  m_LightmapFlags: 4
+  m_ShaderKeywords: GEOM_TYPE_BRANCH _EMISSION _REMOVEDIAG_ON
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -91,8 +91,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BackColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Color: {r: 0.509434, g: 0.0985226, b: 0.0985226, a: 0.9372549}
-    - _EmissionColor: {r: 0.21698111, g: 0.16983342, b: 0, a: 1}
+    - _Color: {r: 0.09664057, g: 0, b: 0.18867922, a: 0.9372549}
+    - _EmissionColor: {r: 0.04324657, g: 0, b: 0.26415092, a: 1}
     - _FrontColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _SpecColor: {r: 0.5377358, g: 0.21560162, b: 0.21560162, a: 1}
